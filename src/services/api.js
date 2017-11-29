@@ -2,7 +2,7 @@ import apisauce from 'apisauce';
 
 
 const create = (baseURL = 'http://localhost:8088/') => {
-  /*** Create Api */
+  /* Create Api */
 
   const api = apisauce.create({
     baseURL,
@@ -12,19 +12,18 @@ const create = (baseURL = 'http://localhost:8088/') => {
   });
 
 
-  /*** Create endpoints */
+  /* Create endpoints */
 
   // alerts
   const getAlerts = (data) => api.get('/alerts', data);
 
 
-  /*** Return endpoint methods */
+  /* Return endpoint methods */
+
   return {
     getAlerts,
   };
-
 };
-
 
 export default {
   create,

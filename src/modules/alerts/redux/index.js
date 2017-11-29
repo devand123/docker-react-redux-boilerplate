@@ -1,10 +1,10 @@
-import { createReducer, createActions } from 'reduxsauce';
+import {createReducer, createActions} from 'reduxsauce';
 import Immutable from 'seamless-immutable';
 
 
-/*** Types and Action creators */
+/* Types and Action creators */
 
-const { Types, Creators } = createActions({
+const {Types, Creators} = createActions({
   getAlertsRequest: ['data'],
   getAlertsSuccess: ['payload'],
   getAlertsFailure: null,
@@ -20,57 +20,45 @@ export const types = Types;
 export const actions = Creators;
 
 
-/*** Initial State */
+/* Initial State */
 
 export const INITIAL_STATE = Immutable({
-  fetching: null,
+  fetching: false,
   payload: [],
-  error: null,
+  error: false,
 });
 
 
-/*** Reducers */
+/* Reducers */
 
-export const request = (state, action) => state.merge({ ...INITIAL_STATE, fetching: true });
-export const success = (state, { payload }) => state.merge({ ...INITIAL_STATE, fetching: false, payload });
-export const failure = (state) => state.merge({ ...INITIAL_STATE, fetching: false, error: true });
-export const selectAll = (state) => {
-  return state.merge({
-    payload: state.payload.map((d) => {
-      return d.merge({ isSelected: true });
-    })
-  });
-};
-export const deselectAll = (state) => {
-  return state.merge({
-    payload: state.payload.map((d) => {
-      return d.merge({ isSelected: false });
-    })
-  });
-};
-export const select = (state, { id }) => {
-  return state.merge({
-    payload: state.payload.map((d) => {
-      if (d.id === id) {
-        return d.merge({ isSelected: true });
-      }
-      return d;
-    })
-  });
-};
-export const deselect = (state, { id }) => {
-  return state.merge({
-    payload: state.payload.map((d) => {
-      if (d.id === id) {
-        return d.merge({ isSelected: false });
-      }
-      return d;
-    })
-  });
-};
+export const request = (state, action) => state.merge({...INITIAL_STATE, fetching: true});
+export const success = (state, {payload}) => state.merge({...INITIAL_STATE, fetching: false, payload});
+export const failure = (state) => state.merge({...INITIAL_STATE, fetching: false, error: true});
+export const selectAll = (state) => state.merge({
+  payload: state.payload.map((d) => d.merge({isSelected: true})),
+});
+export const deselectAll = (state) => state.merge({
+  payload: state.payload.map((d) => d.merge({isSelected: false})),
+});
+export const select = (state, {id}) => state.merge({
+  payload: state.payload.map((d) => {
+    if (d.id === id) {
+      return d.merge({isSelected: true});
+    }
+    return d;
+  })
+});
+export const deselect = (state, {id}) => state.merge({
+  payload: state.payload.map((d) => {
+    if (d.id === id) {
+      return d.merge({isSelected: false});
+    }
+    return d;
+  })
+});
 
 
-/*** Connect Reducers and Types */
+/* Connect Reducers and Types */
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.GET_ALERTS_REQUEST]: request,

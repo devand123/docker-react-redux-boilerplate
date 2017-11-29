@@ -1,9 +1,7 @@
 import configureStore from './configureStore';
-import rootReducer  from '../redux';
+import rootReducer from '../redux';
 import rootSaga from '../sagas/';
 
-const createStore = () => {
-  return configureStore(rootReducer, rootSaga);
-};
+const createStore = () => configureStore(rootReducer, rootSaga);
 
 export default createStore;
